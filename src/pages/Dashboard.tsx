@@ -114,7 +114,7 @@ const Dashboard: React.FC = () => {
              activeTab === 'memory' ? 'Memory Core Access' :
              activeTab === 'files' ? 'Data Vault' : 'System Configuration'}
           </h2>
-        </div>
+        </motion.div>
 
         {/* Chat Content */}
         <div className="flex-1 flex flex-col">
