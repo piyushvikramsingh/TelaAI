@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Brain, Code, Palette, MessageCircle, Play, Star, Github, Twitter, Instagram, HelpCircle } from 'lucide-react';
+import RealtimeDemo from '../components/RealtimeDemo';
+
+// --- VIDEO LINK ---
+// Replace the placeholder URL below with the link to your demo video.
+const demoVideoUrl = 'https://www.youtube.com/watch?v=your_video_id_here'; // <-- PUT YOUR VIDEO LINK HERE
 
 const LandingPage: React.FC = () => {
   const features = [
@@ -120,13 +125,15 @@ const LandingPage: React.FC = () => {
             >
               Experience Tela.ai
             </Link>
-            <button 
-              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+            <a 
+              href={demoVideoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-xl text-lg font-semibold transition-all flex items-center gap-2"
             >
               <Play className="h-5 w-5" />
               Watch Demo
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -170,8 +177,8 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Demo Video Section */}
-      <section className="py-20 px-4">
+      {/* Real-Time Performance Demo Section */}
+      <section id="demo-section" className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -180,31 +187,14 @@ const LandingPage: React.FC = () => {
             className="mb-12"
           >
             <h3 className="text-4xl font-orbitron font-bold mb-4 text-white">
-              Engineering Excellence
+              Real-Time Performance Demo
             </h3>
             <p className="text-gray-400 text-lg">
-              Witness the precision and power of advanced AI assistance
+              Witness the precision and power of advanced AI assistance. Click 'Run Demo' to see it in action.
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-gray-900/80 to-gray-800/40 backdrop-blur-sm border-2 border-white/30 rounded-2xl p-2 cursor-pointer hover:border-white/50 transition-colors"
-            onClick={() => {
-              // Demo video functionality - replace with actual video URL
-              window.open('https://your-demo-video-url.com', '_blank');
-            }}
-          >
-            <div className="bg-black/50 rounded-xl aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <Play className="h-16 w-16 text-white mx-auto mb-4 hover:scale-110 transition-transform" />
-                <p className="text-gray-300 font-semibold">Real-Time Performance Demo</p>
-                <p className="text-sm text-gray-500 mt-2">See the future of AI assistance in action</p>
-              </div>
-            </div>
-          </motion.div>
+          <RealtimeDemo />
         </div>
       </section>
 
