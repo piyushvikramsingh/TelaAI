@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Brain, Code, Palette, MessageCircle, Mic, Paperclip, Play, Star, Github, Twitter, Instagram } from 'lucide-react';
+import { Brain, Code, Palette, MessageCircle, Play, Star, Github, Twitter, Instagram, HelpCircle } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const features = [
@@ -32,21 +32,28 @@ const LandingPage: React.FC = () => {
       role: 'Software Engineer',
       name: 'Alex Chen',
       text: 'Tela.ai accelerated our development cycle by 10x. What used to take weeks now takes hours.',
-      icon: '👨‍💻'
+      rating: 5
     },
     {
       role: 'Product Designer',
       name: 'Sarah Kim',
       text: 'Revolutionary design capabilities. It understands design principles better than most humans.',
-      icon: '🎨'
+      rating: 5
     },
     {
       role: 'Startup Founder',
       name: 'Marcus Johnson',
       text: 'The efficiency gains are extraordinary. Tela.ai is like having a team of experts at your fingertips.',
-      icon: '🚀'
+      rating: 5
     }
   ];
+
+  // Social media links - easy to customize
+  const socialLinks = {
+    instagram: 'https://instagram.com/your-username', // Replace with your Instagram URL
+    twitter: 'https://twitter.com/your-username',     // Replace with your Twitter/X URL
+    github: 'https://github.com/your-username'        // Replace with your GitHub URL
+  };
 
   return (
     <div className="relative z-10">
@@ -60,6 +67,13 @@ const LandingPage: React.FC = () => {
               </h1>
             </div>
             <div className="flex items-center gap-4">
+              <Link
+                to="/faq"
+                className="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+              >
+                <HelpCircle className="h-4 w-4" />
+                FAQ
+              </Link>
               <Link
                 to="/login"
                 className="text-gray-300 hover:text-white transition-colors"
@@ -106,7 +120,10 @@ const LandingPage: React.FC = () => {
             >
               Experience Tela.ai
             </Link>
-            <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-xl text-lg font-semibold transition-all flex items-center gap-2">
+            <button 
+              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-xl text-lg font-semibold transition-all flex items-center gap-2"
+            >
               <Play className="h-5 w-5" />
               Watch Demo
             </button>
@@ -174,11 +191,15 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-gray-900/80 to-gray-800/40 backdrop-blur-sm border-2 border-white/30 rounded-2xl p-2"
+            className="bg-gradient-to-br from-gray-900/80 to-gray-800/40 backdrop-blur-sm border-2 border-white/30 rounded-2xl p-2 cursor-pointer hover:border-white/50 transition-colors"
+            onClick={() => {
+              // Demo video functionality - replace with actual video URL
+              window.open('https://your-demo-video-url.com', '_blank');
+            }}
           >
             <div className="bg-black/50 rounded-xl aspect-video flex items-center justify-center">
               <div className="text-center">
-                <Play className="h-16 w-16 text-white mx-auto mb-4" />
+                <Play className="h-16 w-16 text-white mx-auto mb-4 hover:scale-110 transition-transform" />
                 <p className="text-gray-300 font-semibold">Real-Time Performance Demo</p>
                 <p className="text-sm text-gray-500 mt-2">See the future of AI assistance in action</p>
               </div>
@@ -212,15 +233,24 @@ const LandingPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="bg-gradient-to-br from-gray-900/60 to-gray-800/20 backdrop-blur-sm border border-gray-700/30 rounded-xl p-6 h-full">
-                  <div className="flex items-center mb-4">
-                    <span className="text-3xl mr-3">{testimonial.icon}</span>
+                <div className="bg-gradient-to-br from-gray-900/60 to-gray-800/20 backdrop-blur-sm border border-gray-700/30 rounded-xl p-8 h-full">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-white to-gray-300 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-black font-bold text-lg">{testimonial.name.charAt(0)}</span>
+                    </div>
                     <div>
-                      <p className="text-white font-semibold">{testimonial.role}</p>
-                      <p className="text-gray-400 text-sm">{testimonial.name}</p>
+                      <p className="text-white font-semibold">{testimonial.name}</p>
+                      <p className="text-gray-400 text-sm">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="text-gray-200 italic">"{testimonial.text}"</p>
+                  
+                  <div className="flex mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  
+                  <p className="text-gray-200 italic leading-relaxed">"{testimonial.text}"</p>
                 </div>
               </motion.div>
             ))}
@@ -253,19 +283,37 @@ const LandingPage: React.FC = () => {
                 <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors block">
                   Privacy
                 </Link>
+                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors block">
+                  FAQ
+                </Link>
               </div>
             </div>
 
             <div>
               <h5 className="text-white font-semibold mb-4">Connect</h5>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a 
+                  href={socialLinks.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   <Instagram className="h-6 w-6" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a 
+                  href={socialLinks.twitter} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   <Twitter className="h-6 w-6" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a 
+                  href={socialLinks.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   <Github className="h-6 w-6" />
                 </a>
               </div>
