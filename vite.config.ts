@@ -10,7 +10,8 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['lucide-react'],
+    // Explicitly include Firebase modules to help Vite's resolver
+    include: ['firebase/app', 'firebase/analytics'],
   },
   server: {
     port: 5173,
