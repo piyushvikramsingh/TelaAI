@@ -9,10 +9,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  optimizeDeps: {
-    // Explicitly include Firebase modules to help Vite's resolver
-    include: ['firebase/app', 'firebase/analytics'],
-  },
   server: {
     port: 5173,
     host: true

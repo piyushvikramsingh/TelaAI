@@ -10,8 +10,9 @@ export interface ApiMessage {
 
 export const getChatCompletion = async (messages: ApiMessage[]): Promise<string> => {
   if (!API_KEY || API_KEY.startsWith("sk-proj-...")) {
-    console.error("OpenAI API key not found or is a placeholder. Please add it to your .env file.");
-    return "I can't respond right now. The OpenAI API key is missing or invalid. Please ask the developer to configure it correctly in the `.env` file.";
+    const errorMessage = "OpenAI API key is not configured. Please create a `.env` file by copying `.env.example` and add your key. The AI chat functionality will be disabled until the key is provided.";
+    console.error(errorMessage);
+    return "I can't respond right now. The OpenAI API key is missing or is a placeholder. Please configure it in the `.env` file to enable chat.";
   }
 
   try {
@@ -40,7 +41,7 @@ export const getChatCompletion = async (messages: ApiMessage[]): Promise<string>
     if (axios.isAxiosError(error) && error.response) {
         console.error('Error response data:', error.response.data);
         if (error.response.status === 401) {
-            return "Authentication Error: The provided OpenAI API key is incorrect or has expired. Please verify it in the `.env` file.";
+            return "Authentication Error: The provided OpenAI API key is incorrect or has expired. Please verify it in your `.env` file.";
         }
         if (error.response.status === 429) {
             return "Rate Limit Exceeded: You have exceeded your current quota. Please check your plan and billing details on the OpenAI platform.";
