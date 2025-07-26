@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { getChatCompletion, ApiMessage } from '../services/openai';
+import { chatAPI } from '../services/api';
 import { 
   MessageCircle, 
   CheckSquare, 
@@ -67,14 +67,19 @@ const Dashboard: React.FC = () => {
     setMessages(prev => [...prev, newUserMessage]);
     setIsTyping(true);
 
-    const apiMessages: ApiMessage[] = [
-      ...messages.filter(m => m.role !== 'error').map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: messageToSend }
-    ];
-
     try {
-      const aiResponse = await getChatCompletion(apiMessages);
-      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+      const response = await chatAPI.sendMessage(messageToSend);
+      if (response.success) {
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: response.data.message.content 
+        }]);
+      } else {
+        setMessages(prev => [...prev, { 
+          role: 'error', 
+          content: response.message || 'Failed to get AI response' 
+        }]);
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
       setMessages(prev => [...prev, { role: 'error', content: errorMessage }]);
