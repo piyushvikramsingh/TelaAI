@@ -109,17 +109,18 @@ interface ChatState {
 export const useChatStore = create<ChatState>()(
   subscribeWithSelector((set, get) => ({
     chats: [],
-    contacts: [
-      { id: 'user2', name: 'Sarah Johnson', phone: '+1234567891', avatar: '👩‍💼', isOnline: true },
-      { id: 'user3', name: 'Alex Chen', phone: '+1234567892', avatar: '👨‍💻', isOnline: false },
-      { id: 'user4', name: 'Maria Garcia', phone: '+1234567893', avatar: '👩‍🎨', isOnline: true },
-      { id: 'user5', name: 'John Smith', phone: '+1234567894', avatar: '👨‍💼', isOnline: false },
-      { id: 'user6', name: 'Emma Wilson', phone: '+1234567895', avatar: '👩‍🔬', isOnline: true },
-    ],
+      contacts: [
+    { id: 'jarvy', name: 'Jarvy AI Assistant', phone: '+1-AI-JARVY', avatar: '🤖', isOnline: true, status: 'AI Assistant - Always here to help!' },
+    { id: 'user2', name: 'Sarah Johnson', phone: '+1234567891', avatar: '👩‍💼', isOnline: true },
+    { id: 'user3', name: 'Alex Chen', phone: '+1234567892', avatar: '👨‍💻', isOnline: false },
+    { id: 'user4', name: 'Maria Garcia', phone: '+1234567893', avatar: '👩‍🎨', isOnline: true },
+    { id: 'user5', name: 'John Smith', phone: '+1234567894', avatar: '👨‍💼', isOnline: false },
+    { id: 'user6', name: 'Emma Wilson', phone: '+1234567895', avatar: '👩‍🔬', isOnline: true },
+  ],
     statuses: [],
     selectedChat: null,
     isTyping: {},
-    onlineUsers: new Set(['user2', 'user4', 'user6']),
+    onlineUsers: new Set(['jarvy', 'user2', 'user4', 'user6']),
     connectionStatus: 'connecting',
 
     setChats: (chats) => set({ chats }),

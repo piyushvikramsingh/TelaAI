@@ -5,7 +5,7 @@ import {
   Archive, Pin, Star, Trash2, Forward, Reply, Copy, Download,
   VolumeX, Volume2, Play, Pause, MicOff, VideoOff, PhoneOff,
   Users, Settings, Moon, Sun, Bell, BellOff, Lock, Shield, Plus,
-  MessageCircle, Eye, Clock, Edit3, X, Menu
+  MessageCircle, Eye, Clock, Edit3, X, Menu, Bot
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
@@ -13,6 +13,7 @@ import { useChatStore, Message, Chat } from '../store/chatStore';
 import { formatDistanceToNow } from 'date-fns';
 import toast from 'react-hot-toast';
 import EmojiPicker from 'emoji-picker-react';
+import JarvyChat from '../components/JarvyChat';
 
 const ChattyPage = () => {
   const navigate = useNavigate();
@@ -358,17 +359,30 @@ const ChattyPage = () => {
                     <button
                       key={contact.id}
                       onClick={() => createNewChat(contact.id)}
-                      className={`flex-shrink-0 flex flex-col items-center p-2 rounded-lg ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                      className={`flex-shrink-0 flex flex-col items-center p-2 rounded-lg ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} ${contact.id === 'jarvy' ? 'ring-2 ring-blue-400' : ''}`}
                     >
                       <div className="relative">
-                        <div className="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center text-lg mb-1">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg mb-1 ${
+                          contact.id === 'jarvy' 
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-600' 
+                            : 'bg-gray-200 dark:bg-gray-600'
+                        }`}>
                           {contact.avatar}
                         </div>
                         {contact.isOnline && (
-                          <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                          <div className={`absolute bottom-1 right-1 w-3 h-3 rounded-full border-2 border-white ${
+                            contact.id === 'jarvy' ? 'bg-green-500 animate-pulse' : 'bg-green-500'
+                          }`}></div>
+                        )}
+                        {contact.id === 'jarvy' && (
+                          <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <Bot className="w-2 h-2 text-white" />
+                          </div>
                         )}
                       </div>
-                      <span className="text-xs text-center">{contact.name.split(' ')[0]}</span>
+                      <span className={`text-xs text-center ${contact.id === 'jarvy' ? 'font-medium text-blue-600 dark:text-blue-400' : ''}`}>
+                        {contact.id === 'jarvy' ? 'Jarvy AI' : contact.name.split(' ')[0]}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -388,7 +402,7 @@ const ChattyPage = () => {
                     key={chat.id}
                     className={`flex items-center p-4 hover:${darkMode ? 'bg-gray-700' : 'bg-gray-50'} cursor-pointer border-b ${darkMode ? 'border-gray-700' : 'border-gray-100'} ${
                       selectedChat?.id === chat.id ? (darkMode ? 'bg-gray-700' : 'bg-green-50') : ''
-                    }`}
+                    } ${chat.participants.includes('jarvy') ? 'border-l-4 border-l-blue-500' : ''}`}
                     onClick={() => {
                       setSelectedChat(chat);
                       setShowSidebar(false);
@@ -396,11 +410,22 @@ const ChattyPage = () => {
                     }}
                   >
                     <div className="relative">
-                      <div className={`w-12 h-12 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'} rounded-full flex items-center justify-center text-xl`}>
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${
+                        chat.participants.includes('jarvy') 
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-600' 
+                          : darkMode ? 'bg-gray-600' : 'bg-gray-200'
+                      }`}>
                         {chat.avatar}
                       </div>
                       {onlineUsers.has(chat.participants?.find(p => p !== user.id) || '') && (
-                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
+                          chat.participants.includes('jarvy') ? 'bg-green-500 animate-pulse' : 'bg-green-500'
+                        }`}></div>
+                      )}
+                      {chat.participants.includes('jarvy') && (
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                          <Bot className="w-2 h-2 text-white" />
+                        </div>
                       )}
                     </div>
                     <div className="ml-3 flex-1">
@@ -461,44 +486,49 @@ const ChattyPage = () => {
 
       {/* Chat Area */}
       {selectedChat ? (
-        <div className="flex flex-col flex-1">
-          {/* Chat Header */}
-          <div className={`p-4 ${darkMode ? 'bg-gray-750' : 'bg-gray-50'} border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} flex items-center justify-between`}>
-            <div className="flex items-center">
-              <button
-                onClick={() => setShowSidebar(true)}
-                className={`md:hidden mr-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div className={`w-10 h-10 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'} rounded-full flex items-center justify-center text-lg`}>
-                {selectedChat.avatar}
+        <>
+          {/* Check if this is Jarvy chat */}
+          {selectedChat.participants.includes('jarvy') ? (
+            <JarvyChat chatId={selectedChat.id} darkMode={darkMode} />
+          ) : (
+            <div className="flex flex-col flex-1">
+              {/* Chat Header */}
+              <div className={`p-4 ${darkMode ? 'bg-gray-750' : 'bg-gray-50'} border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} flex items-center justify-between`}>
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setShowSidebar(true)}
+                    className={`md:hidden mr-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className={`w-10 h-10 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'} rounded-full flex items-center justify-center text-lg`}>
+                    {selectedChat.avatar}
+                  </div>
+                  <div className="ml-3">
+                    <h2 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {selectedChat.name}
+                    </h2>
+                    <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {onlineUsers.has(selectedChat.participants?.find(p => p !== user.id) || '') ? 'Online' : 'Last seen recently'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={startVoiceCall}
+                    className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer hover:text-green-500`}
+                  >
+                    <Phone className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={startVideoCall}
+                    className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer hover:text-green-500`}
+                  >
+                    <Video className="w-5 h-5" />
+                  </button>
+                  <MoreVertical className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer`} />
+                </div>
               </div>
-              <div className="ml-3">
-                <h2 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  {selectedChat.name}
-                </h2>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {onlineUsers.has(selectedChat.participants?.find(p => p !== user.id) || '') ? 'Online' : 'Last seen recently'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={startVoiceCall}
-                className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer hover:text-green-500`}
-              >
-                <Phone className="w-5 h-5" />
-              </button>
-              <button
-                onClick={startVideoCall}
-                className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer hover:text-green-500`}
-              >
-                <Video className="w-5 h-5" />
-              </button>
-              <MoreVertical className={`w-5 h-5 ${darkMode ? 'text-gray-300' : 'text-gray-600'} cursor-pointer`} />
-            </div>
-          </div>
 
           {/* Messages */}
           <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
@@ -707,6 +737,8 @@ const ChattyPage = () => {
             </div>
           </div>
         </div>
+          )}
+        </>
       ) : (
         <div className={`hidden md:flex flex-1 items-center justify-center ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
           <div className="text-center">
@@ -719,12 +751,36 @@ const ChattyPage = () => {
             <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
               Send and receive messages without keeping your phone online.
             </p>
+            <div className="mb-4">
+              <button
+                onClick={() => createNewChat('jarvy')}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 flex items-center space-x-2 mx-auto"
+              >
+                <Bot className="w-5 h-5" />
+                <span>Chat with Jarvy AI</span>
+              </button>
+              <p className="text-xs text-gray-500 mt-2">Get instant help and answers</p>
+            </div>
             <div className="text-sm text-gray-500 flex items-center justify-center">
               <Shield className="w-4 h-4 mr-2" />
               Your personal messages are end-to-end encrypted
             </div>
           </div>
         </div>
+      )}
+
+      {/* Floating Jarvy Button */}
+      {!selectedChat?.participants.includes('jarvy') && (
+        <button
+          onClick={() => createNewChat('jarvy')}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group"
+          title="Chat with Jarvy AI Assistant"
+        >
+          <Bot className="w-6 h-6" />
+          <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Chat with Jarvy AI
+          </div>
+        </button>
       )}
     </div>
   );

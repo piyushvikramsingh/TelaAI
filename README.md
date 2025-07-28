@@ -1,6 +1,6 @@
-# Chattyy - Complete WhatsApp Clone
+# Chattyy - Complete WhatsApp Clone with AI Assistant
 
-A fully functional, real-time chat application built with React, TypeScript, and modern web technologies. Chattyy provides all the features you'd expect from a modern messaging app, including voice/video calls, status updates, file sharing, and more.
+A fully functional, real-time chat application built with React, TypeScript, and modern web technologies. Chattyy provides all the features you'd expect from a modern messaging app, including voice/video calls, status updates, file sharing, and **Jarvy AI Assistant** for instant help and support.
 
 ## 🚀 Features
 
@@ -8,6 +8,15 @@ A fully functional, real-time chat application built with React, TypeScript, and
 - Phone number authentication with OTP verification
 - Secure user registration and login
 - Persistent login sessions
+
+### 🤖 Jarvy AI Assistant
+- **Intelligent chatbot** trained on general questions and app features
+- **Natural language processing** for understanding user queries
+- **Contextual responses** with smart suggestions
+- **App guidance** - Help with features, troubleshooting, and how-to guides
+- **24/7 availability** - Always online to assist users
+- **Learning capability** - Continuously improving responses
+- **Multi-topic support** - General questions, technical help, and app features
 
 ### 💬 Messaging
 - Real-time text messaging
@@ -163,11 +172,20 @@ If you want to use Firebase for backend services:
 - View others' status by clicking on them
 - Status disappears after 24 hours
 
+#### Jarvy AI Assistant
+- Click the floating AI button or find Jarvy in contacts
+- Ask questions about app features: "How do I make a video call?"
+- Get technical support: "App not working" or "Connection issues"
+- General questions: "What's the time?" or "How's the weather?"
+- Follow suggested questions for quick help
+- Jarvy responds with helpful answers and suggestions
+
 ## 🏗️ Project Structure
 
 ```
 src/
 ├── components/          # Reusable UI components
+│   └── JarvyChat.tsx   # AI Assistant chat interface
 ├── pages/              # Main application pages
 │   ├── LoginPage.tsx   # Phone authentication
 │   ├── ChattyPage.tsx  # Main chat interface
@@ -177,6 +195,7 @@ src/
 │   ├── authStore.ts    # Authentication state
 │   └── chatStore.ts    # Chat and messaging state
 ├── services/           # API and external services
+│   └── jarvy.ts        # Jarvy AI Assistant service
 ├── firebase.ts         # Firebase configuration
 ├── App.tsx            # Main application component
 ├── main.tsx           # Application entry point
