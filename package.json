@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "type": "module",
   "description": "A fully functional WhatsApp-like chat application with video calls, status, Jarvy AI assistant, and more",
-  "homepage": "https://piyushvikramsingh.github.io/chattyy",
+  "homepage": "https://piyushvikramsingh.github.io/TelaAI",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
