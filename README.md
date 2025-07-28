@@ -3,9 +3,9 @@
 A fully functional, real-time chat application built with React, TypeScript, and modern web technologies. Chattyy provides all the features you'd expect from a modern messaging app, including voice/video calls, status updates, file sharing, and **Jarvy AI Assistant** for instant help and support.
 
 ## 🌐 **Live Demo**
-**Experience Chattyy now:** [https://piyushvikramsingh.github.io/chattyy](https://piyushvikramsingh.github.io/chattyy)
+**Experience Chattyy now:** [https://piyushvikramsingh.github.io/TelaAI](https://piyushvikramsingh.github.io/TelaAI)
 
-[![Deploy Status](https://github.com/piyushvikramsingh/chattyy/actions/workflows/deploy.yml/badge.svg)](https://github.com/piyushvikramsingh/chattyy/actions/workflows/deploy.yml)
+[![Deploy Status](https://github.com/piyushvikramsingh/TelaAI/actions/workflows/deploy.yml/badge.svg)](https://github.com/piyushvikramsingh/TelaAI/actions/workflows/deploy.yml)
 
 ## 🚀 Features
 
