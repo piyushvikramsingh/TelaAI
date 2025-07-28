@@ -9,14 +9,17 @@ A fully functional, real-time chat application built with React, TypeScript, and
 - Secure user registration and login
 - Persistent login sessions
 
-### 🤖 Jarvy AI Assistant
-- **Intelligent chatbot** trained on general questions and app features
-- **Natural language processing** for understanding user queries
-- **Contextual responses** with smart suggestions
-- **App guidance** - Help with features, troubleshooting, and how-to guides
-- **24/7 availability** - Always online to assist users
-- **Learning capability** - Continuously improving responses
-- **Multi-topic support** - General questions, technical help, and app features
+### 🤖 Jarvy AI Assistant - Advanced Meta/Grok-Level Training
+- **Meta-like Reasoning Engine** - Advanced pattern recognition and logical inference
+- **Grok-style Creative Responses** - Context-aware, personalized communication
+- **Knowledge Graph** - 18+ domains with 100+ interconnected concepts
+- **Multi-Modal Reasoning** - Causal, comparative, analytical, temporal, and strategic thinking
+- **Auto-Training System** - Comprehensive dataset with 25+ expert-level conversations
+- **Domain Expertise** - Technology, business, health, science, finance, psychology, and more
+- **Complex Query Processing** - Handles expert-level questions with confidence scoring
+- **Continuous Learning** - Real-time adaptation based on user feedback
+- **Advanced NLP** - Fuzzy matching, semantic similarity, and context understanding
+- **Training Interface** - Built-in system for adding new knowledge and conversations
 
 ### 💬 Messaging
 - Real-time text messaging
@@ -172,13 +175,22 @@ If you want to use Firebase for backend services:
 - View others' status by clicking on them
 - Status disappears after 24 hours
 
-#### Jarvy AI Assistant
-- Click the floating AI button or find Jarvy in contacts
-- Ask questions about app features: "How do I make a video call?"
-- Get technical support: "App not working" or "Connection issues"
-- General questions: "What's the time?" or "How's the weather?"
-- Follow suggested questions for quick help
-- Jarvy responds with helpful answers and suggestions
+#### Jarvy AI Assistant - Advanced Training
+- **Access Training Interface**: Click the Bot icon in the header
+- **Domain Knowledge Training**: Add new concepts, facts, and examples
+- **Conversation Training**: Train with custom Q&A pairs and ratings
+- **Auto-Training**: Comprehensive dataset automatically trains Jarvy on startup
+- **Advanced Queries**: Ask complex questions like "Analyze AI's impact on employment"
+- **Expert-Level Responses**: Get detailed, multi-perspective answers with sources
+- **Reasoning Insights**: View confidence scores, complexity levels, and knowledge sources
+- **Multiple Training Modes**: Comprehensive, quick, expert-only, or domain-specific
+
+**Example Advanced Queries:**
+- "Compare React vs Vue.js for enterprise applications"
+- "Explain quantum computing principles in simple terms"
+- "How to validate a business idea before investing?"
+- "What are evidence-based mental health strategies?"
+- "Analyze the trade-offs between economic growth and sustainability"
 
 ## 🏗️ Project Structure
 
@@ -195,7 +207,10 @@ src/
 │   ├── authStore.ts    # Authentication state
 │   └── chatStore.ts    # Chat and messaging state
 ├── services/           # API and external services
-│   └── jarvy.ts        # Jarvy AI Assistant service
+│   ├── jarvy.ts        # Enhanced Jarvy AI with Meta/Grok capabilities
+│   ├── advancedJarvy.ts # Advanced AI reasoning and knowledge graph
+│   ├── trainingData.ts # Comprehensive training dataset (25+ conversations)
+│   └── autoTrainer.ts  # Automated training system
 ├── firebase.ts         # Firebase configuration
 ├── App.tsx            # Main application component
 ├── main.tsx           # Application entry point

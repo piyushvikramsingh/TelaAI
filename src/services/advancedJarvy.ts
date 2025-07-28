@@ -174,30 +174,324 @@ const advancedKnowledgeBase: KnowledgeNode[] = [
     ],
     confidence: 0.91,
     lastUpdated: new Date().toISOString()
+  },
+
+  // Software Development
+  {
+    id: 'software_development',
+    concept: 'Software Development',
+    category: 'technology',
+    relations: ['programming', 'algorithms', 'engineering'],
+    facts: [
+      'Agile methodology emphasizes iterative development',
+      'Version control systems track code changes',
+      'Testing ensures software quality and reliability',
+      'Code reviews improve code quality and knowledge sharing',
+      'DevOps practices integrate development and operations'
+    ],
+    examples: [
+      'Git for version control',
+      'Scrum framework for agile development',
+      'Unit testing with Jest or JUnit',
+      'Continuous integration with GitHub Actions',
+      'Docker for containerization'
+    ],
+    confidence: 0.94,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Web Development
+  {
+    id: 'web_development',
+    concept: 'Web Development',
+    category: 'technology',
+    relations: ['software_development', 'internet', 'user_interface'],
+    facts: [
+      'Frontend frameworks simplify user interface development',
+      'Backend APIs handle data processing and storage',
+      'Responsive design ensures compatibility across devices',
+      'Web security prevents vulnerabilities and attacks',
+      'Performance optimization improves user experience'
+    ],
+    examples: [
+      'React for building user interfaces',
+      'Node.js for server-side JavaScript',
+      'CSS Grid and Flexbox for layouts',
+      'HTTPS for secure communication',
+      'Webpack for bundling assets'
+    ],
+    confidence: 0.93,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Data Science
+  {
+    id: 'data_science',
+    concept: 'Data Science',
+    category: 'technology',
+    relations: ['statistics', 'machine_learning', 'programming'],
+    facts: [
+      'Data cleaning is essential for accurate analysis',
+      'Statistical methods reveal patterns in data',
+      'Machine learning models predict future outcomes',
+      'Data visualization communicates insights effectively',
+      'Big data technologies handle massive datasets'
+    ],
+    examples: [
+      'Python pandas for data manipulation',
+      'Matplotlib for creating charts',
+      'Scikit-learn for machine learning',
+      'SQL for database queries',
+      'Apache Spark for big data processing'
+    ],
+    confidence: 0.90,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Cybersecurity
+  {
+    id: 'cybersecurity',
+    concept: 'Cybersecurity',
+    category: 'technology',
+    relations: ['security', 'networks', 'privacy'],
+    facts: [
+      'Encryption protects data from unauthorized access',
+      'Multi-factor authentication adds security layers',
+      'Regular updates patch security vulnerabilities',
+      'Security awareness training prevents social engineering',
+      'Incident response plans minimize breach impact'
+    ],
+    examples: [
+      'AES encryption for data protection',
+      'Two-factor authentication apps',
+      'Firewall rules for network security',
+      'Phishing simulation training',
+      'Security information and event management (SIEM)'
+    ],
+    confidence: 0.89,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Cloud Computing
+  {
+    id: 'cloud_computing',
+    concept: 'Cloud Computing',
+    category: 'technology',
+    relations: ['infrastructure', 'scalability', 'internet'],
+    facts: [
+      'Cloud services provide on-demand resource allocation',
+      'Scalability allows systems to handle varying loads',
+      'Cost optimization reduces infrastructure expenses',
+      'Multi-cloud strategies avoid vendor lock-in',
+      'Cloud security requires shared responsibility'
+    ],
+    examples: [
+      'AWS EC2 for virtual servers',
+      'Azure Functions for serverless computing',
+      'Google Cloud Storage for data storage',
+      'Kubernetes for container orchestration',
+      'CloudFormation for infrastructure as code'
+    ],
+    confidence: 0.92,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Business Strategy
+  {
+    id: 'business_strategy',
+    concept: 'Business Strategy',
+    category: 'business',
+    relations: ['management', 'competition', 'markets'],
+    facts: [
+      'SWOT analysis identifies strengths and opportunities',
+      'Market research informs strategic decisions',
+      'Competitive advantage drives business success',
+      'Innovation creates new value propositions',
+      'Strategic planning aligns resources with goals'
+    ],
+    examples: [
+      'Blue Ocean Strategy for new markets',
+      'Porter\'s Five Forces analysis',
+      'Lean Startup methodology',
+      'OKRs for goal setting',
+      'Business Model Canvas'
+    ],
+    confidence: 0.87,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Digital Marketing
+  {
+    id: 'digital_marketing',
+    concept: 'Digital Marketing',
+    category: 'business',
+    relations: ['marketing', 'technology', 'consumer_behavior'],
+    facts: [
+      'SEO improves website visibility in search results',
+      'Social media marketing builds brand awareness',
+      'Content marketing provides value to customers',
+      'Email marketing nurtures customer relationships',
+      'Analytics measure marketing effectiveness'
+    ],
+    examples: [
+      'Google Ads for paid search advertising',
+      'Facebook Marketing for social promotion',
+      'HubSpot for marketing automation',
+      'Google Analytics for tracking',
+      'A/B testing for optimization'
+    ],
+    confidence: 0.88,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Healthcare Technology
+  {
+    id: 'healthcare_technology',
+    concept: 'Healthcare Technology',
+    category: 'healthcare',
+    relations: ['medicine', 'technology', 'patient_care'],
+    facts: [
+      'Electronic health records improve patient data management',
+      'Telemedicine expands healthcare access',
+      'AI assists in medical diagnosis and treatment',
+      'Wearable devices monitor patient health continuously',
+      'Medical imaging technology enhances diagnostic accuracy'
+    ],
+    examples: [
+      'Epic Systems for hospital management',
+      'Zoom for telehealth consultations',
+      'IBM Watson for oncology',
+      'Apple Watch for heart monitoring',
+      'MRI and CT scan technologies'
+    ],
+    confidence: 0.85,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Environmental Science
+  {
+    id: 'environmental_science',
+    concept: 'Environmental Science',
+    category: 'science',
+    relations: ['ecology', 'climate', 'sustainability'],
+    facts: [
+      'Climate change affects global weather patterns',
+      'Renewable energy reduces carbon emissions',
+      'Biodiversity loss threatens ecosystem stability',
+      'Sustainable practices preserve natural resources',
+      'Environmental monitoring tracks ecological health'
+    ],
+    examples: [
+      'Solar panels for clean energy',
+      'Carbon footprint calculators',
+      'Wildlife conservation programs',
+      'Recycling and waste reduction',
+      'Air quality monitoring systems'
+    ],
+    confidence: 0.86,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Education Technology
+  {
+    id: 'education_technology',
+    concept: 'Education Technology',
+    category: 'education',
+    relations: ['learning', 'technology', 'pedagogy'],
+    facts: [
+      'Online learning platforms increase educational accessibility',
+      'Adaptive learning personalizes educational content',
+      'Virtual reality creates immersive learning experiences',
+      'Learning analytics track student progress',
+      'Collaborative tools enhance group learning'
+    ],
+    examples: [
+      'Coursera for online courses',
+      'Khan Academy for adaptive learning',
+      'VR headsets for virtual field trips',
+      'Google Classroom for collaboration',
+      'Duolingo for language learning'
+    ],
+    confidence: 0.89,
+    lastUpdated: new Date().toISOString()
+  },
+
+  // Finance Technology
+  {
+    id: 'fintech',
+    concept: 'Financial Technology',
+    category: 'finance',
+    relations: ['banking', 'technology', 'payments'],
+    facts: [
+      'Digital payments simplify financial transactions',
+      'Blockchain technology enables secure transactions',
+      'Robo-advisors provide automated investment advice',
+      'Cryptocurrency offers decentralized currency options',
+      'RegTech helps financial institutions comply with regulations'
+    ],
+    examples: [
+      'PayPal for digital payments',
+      'Bitcoin as cryptocurrency',
+      'Betterment for robo-advisory',
+      'Stripe for payment processing',
+      'Plaid for financial data connectivity'
+    ],
+    confidence: 0.90,
+    lastUpdated: new Date().toISOString()
   }
 ];
 
 // Advanced Reasoning Patterns
 const reasoningPatterns = {
   causal: {
-    triggers: ['why', 'because', 'cause', 'reason', 'leads to', 'results in'],
-    structure: 'cause → effect → implications'
+    triggers: ['why', 'because', 'cause', 'reason', 'leads to', 'results in', 'due to', 'stems from'],
+    structure: 'cause → effect → implications',
+    depth: 3
   },
   comparative: {
-    triggers: ['vs', 'versus', 'compare', 'difference', 'better', 'worse'],
-    structure: 'item1 ↔ item2 → analysis → conclusion'
+    triggers: ['vs', 'versus', 'compare', 'difference', 'better', 'worse', 'similar', 'contrast', 'alike'],
+    structure: 'item1 ↔ item2 → analysis → conclusion',
+    depth: 2
   },
   analytical: {
-    triggers: ['analyze', 'breakdown', 'components', 'factors', 'elements'],
-    structure: 'whole → parts → relationships → synthesis'
+    triggers: ['analyze', 'breakdown', 'components', 'factors', 'elements', 'structure', 'parts'],
+    structure: 'whole → parts → relationships → synthesis',
+    depth: 4
   },
   temporal: {
-    triggers: ['timeline', 'history', 'evolution', 'progression', 'development'],
-    structure: 'past → present → future trends'
+    triggers: ['timeline', 'history', 'evolution', 'progression', 'development', 'trends', 'future'],
+    structure: 'past → present → future trends',
+    depth: 3
   },
   hypothetical: {
-    triggers: ['what if', 'suppose', 'imagine', 'hypothetically', 'scenario'],
-    structure: 'premise → logical steps → conclusions → implications'
+    triggers: ['what if', 'suppose', 'imagine', 'hypothetically', 'scenario', 'potential', 'possibility'],
+    structure: 'premise → logical steps → conclusions → implications',
+    depth: 4
+  },
+  evaluative: {
+    triggers: ['evaluate', 'assess', 'judge', 'rate', 'worth', 'value', 'quality', 'effectiveness'],
+    structure: 'criteria → evidence → judgment → recommendations',
+    depth: 3
+  },
+  procedural: {
+    triggers: ['how to', 'steps', 'process', 'method', 'procedure', 'guide', 'tutorial'],
+    structure: 'goal → requirements → steps → validation',
+    depth: 2
+  },
+  creative: {
+    triggers: ['creative', 'innovative', 'brainstorm', 'ideas', 'solutions', 'alternatives', 'novel'],
+    structure: 'problem → ideation → evaluation → refinement',
+    depth: 3
+  },
+  ethical: {
+    triggers: ['ethical', 'moral', 'right', 'wrong', 'should', 'ought', 'responsibility', 'values'],
+    structure: 'situation → principles → considerations → ethical judgment',
+    depth: 4
+  },
+  strategic: {
+    triggers: ['strategy', 'planning', 'goals', 'objectives', 'approach', 'tactics', 'roadmap'],
+    structure: 'vision → analysis → planning → execution → monitoring',
+    depth: 5
   }
 };
 
