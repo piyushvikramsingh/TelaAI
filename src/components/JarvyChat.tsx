@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, Lightbulb, Zap, HelpCircle, Loader } from 'lucide-react';
+import { Send, Bot, Lightbulb, Zap, HelpCircle, Loader, Brain, Target, BookOpen } from 'lucide-react';
 import { jarvy, JarvyResponse } from '../services/jarvy';
+import { AdvancedJarvyResponse } from '../services/advancedJarvy';
 import { useAuthStore } from '../store/authStore';
 import { useChatStore, Message } from '../store/chatStore';
 import { formatDistanceToNow } from 'date-fns';
@@ -17,6 +18,8 @@ const JarvyChat: React.FC<JarvyChatProps> = ({ chatId, darkMode = false }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [quickSuggestions, setQuickSuggestions] = useState<string[]>([]);
+  const [advancedMode, setAdvancedMode] = useState(false);
+  const [lastResponse, setLastResponse] = useState<AdvancedJarvyResponse | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,13 +67,16 @@ const JarvyChat: React.FC<JarvyChatProps> = ({ chatId, darkMode = false }) => {
     setIsTyping(true);
 
     try {
-      // Get AI response
-      const response: JarvyResponse = await jarvy.getResponse(text);
+      // Get AI response (advanced or basic)
+      const response: AdvancedJarvyResponse = await (jarvy as any).getAdvancedResponse(text, user?.id);
+      setLastResponse(response);
       
-      // Simulate typing delay
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+      // Simulate typing delay based on complexity
+      const typingDelay = response.complexity === 'expert' ? 3000 : 
+                         response.complexity === 'complex' ? 2000 : 1000;
+      await new Promise(resolve => setTimeout(resolve, typingDelay + Math.random() * 1000));
 
-      // Add Jarvy's response
+      // Add Jarvy's response with enhanced formatting
       const jarvyMessage: Message = {
         id: `msg_${Date.now()}_jarvy`,
         text: response.text,
@@ -89,8 +95,13 @@ const JarvyChat: React.FC<JarvyChatProps> = ({ chatId, darkMode = false }) => {
       addMessage(selectedChat.id, jarvyMessage);
 
       // Set suggestions if available
-      if (response.suggestions) {
-        setSuggestions(response.suggestions);
+      if (response.followUp) {
+        setSuggestions(response.followUp);
+      }
+
+      // Enable advanced mode for complex responses
+      if (response.complexity === 'complex' || response.complexity === 'expert') {
+        setAdvancedMode(true);
       }
 
     } catch (error) {
@@ -161,7 +172,13 @@ const JarvyChat: React.FC<JarvyChatProps> = ({ chatId, darkMode = false }) => {
               {isTyping ? 'Typing...' : 'Online • AI Assistant'}
             </p>
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center space-x-2">
+            {advancedMode && (
+              <div className="flex items-center space-x-1 px-2 py-1 bg-purple-100 dark:bg-purple-900 rounded-full">
+                <Brain className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">Advanced Mode</span>
+              </div>
+            )}
             <Bot className={`w-6 h-6 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
           </div>
         </div>
@@ -268,13 +285,64 @@ const JarvyChat: React.FC<JarvyChatProps> = ({ chatId, darkMode = false }) => {
         )}
       </div>
 
+      {/* Advanced AI Insights */}
+      {lastResponse && advancedMode && (
+        <div className={`p-4 border-t ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-purple-50 border-purple-200'}`}>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="flex items-center space-x-2">
+              <Target className={`w-4 h-4 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
+              <div>
+                <div className="text-xs font-medium text-gray-500">Confidence</div>
+                <div className={`text-sm font-bold ${lastResponse.confidence > 0.8 ? 'text-green-600' : lastResponse.confidence > 0.6 ? 'text-yellow-600' : 'text-red-600'}`}>
+                  {Math.round(lastResponse.confidence * 100)}%
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Brain className={`w-4 h-4 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              <div>
+                <div className="text-xs font-medium text-gray-500">Complexity</div>
+                <div className={`text-sm font-bold capitalize ${
+                  lastResponse.complexity === 'expert' ? 'text-red-600' :
+                  lastResponse.complexity === 'complex' ? 'text-orange-600' :
+                  lastResponse.complexity === 'moderate' ? 'text-yellow-600' : 'text-green-600'
+                }`}>
+                  {lastResponse.complexity}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {lastResponse.sources && lastResponse.sources.length > 0 && (
+            <div className="mb-4">
+              <div className="flex items-center space-x-2 mb-2">
+                <BookOpen className={`w-4 h-4 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+                <span className={`text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Knowledge Sources:
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {lastResponse.sources.slice(0, 3).map((source, index) => (
+                  <span
+                    key={index}
+                    className={`px-2 py-1 rounded text-xs ${darkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}
+                  >
+                    {source}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Suggestions */}
       {suggestions.length > 0 && (
         <div className={`p-4 border-t ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center space-x-2 mb-2">
             <Lightbulb className={`w-4 h-4 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />
             <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Suggested questions:
+              {advancedMode ? 'Follow-up Questions:' : 'Suggested questions:'}
             </span>
           </div>
           <div className="flex flex-wrap gap-2">

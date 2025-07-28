@@ -355,8 +355,89 @@ class JarvyAI {
   }
 }
 
-// Export singleton instance
-export const jarvy = new JarvyAI();
+// Import advanced AI capabilities
+import { advancedJarvy, AdvancedJarvyUtils, AdvancedJarvyResponse } from './advancedJarvy';
+
+// Enhanced Jarvy with Meta/Grok-like capabilities
+class EnhancedJarvyAI extends JarvyAI {
+  async getAdvancedResponse(input: string, userId?: string): Promise<AdvancedJarvyResponse> {
+    try {
+      // Use advanced AI for complex queries
+      if (this.isComplexQuery(input)) {
+        return await advancedJarvy.processComplexQuery(input, userId);
+      }
+      
+      // Fallback to basic response
+      const basicResponse = await this.getResponse(input);
+      return {
+        text: basicResponse.text,
+        type: 'conversational',
+        confidence: basicResponse.confidence,
+        complexity: 'simple',
+        sources: [],
+        reasoning: ['Basic pattern matching applied'],
+        followUp: basicResponse.suggestions
+      };
+    } catch (error) {
+      console.error('Advanced Jarvy error:', error);
+      // Fallback to basic response
+      const basicResponse = await this.getResponse(input);
+      return {
+        text: basicResponse.text,
+        type: 'conversational',
+        confidence: basicResponse.confidence * 0.8, // Reduce confidence due to fallback
+        complexity: 'simple',
+        sources: [],
+        reasoning: ['Fallback to basic processing due to error']
+      };
+    }
+  }
+
+  private isComplexQuery(input: string): boolean {
+    const complexityIndicators = [
+      'explain', 'analyze', 'compare', 'why does', 'how does', 'what if',
+      'relationship between', 'difference between', 'advantages', 'disadvantages',
+      'pros and cons', 'impact of', 'consequences', 'implications', 'reasoning'
+    ];
+    
+    const inputLower = input.toLowerCase();
+    return complexityIndicators.some(indicator => inputLower.includes(indicator)) ||
+           input.split(' ').length > 10; // Long queries often need complex reasoning
+  }
+
+  // Enhanced training with advanced capabilities
+  async trainWithAdvancedData(
+    conversations: Array<{query: string, response: string, rating: number}>
+  ): Promise<void> {
+    // Train basic system
+    for (const conv of conversations) {
+      await this.trainWithNewData(
+        [conv.query], 
+        [conv.response], 
+        'user_training'
+      );
+    }
+    
+    // Train advanced system
+    AdvancedJarvyUtils.trainFromConversation(conversations);
+  }
+
+  // Add domain expertise
+  addDomainKnowledge(
+    domain: string, 
+    knowledge: Array<{concept: string, facts: string[], examples: string[]}>
+  ): void {
+    AdvancedJarvyUtils.addDomainKnowledge(domain, knowledge);
+  }
+
+  // Get AI performance metrics
+  getPerformanceMetrics() {
+    return AdvancedJarvyUtils.getAIMetrics();
+  }
+}
+
+// Export enhanced singleton instance
+export const jarvy = new EnhancedJarvyAI();
 
 // Export utility functions
 export const JarvyUtils = {

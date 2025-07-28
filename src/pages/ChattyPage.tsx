@@ -14,6 +14,7 @@ import { formatDistanceToNow } from 'date-fns';
 import toast from 'react-hot-toast';
 import EmojiPicker from 'emoji-picker-react';
 import JarvyChat from '../components/JarvyChat';
+import JarvyTraining from '../components/JarvyTraining';
 
 const ChattyPage = () => {
   const navigate = useNavigate();
@@ -37,9 +38,10 @@ const ChattyPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [showTraining, setShowTraining] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  const [showSidebar, setShowSidebar] = useState(false);
   const [activeTab, setActiveTab] = useState<'chats' | 'status' | 'calls'>('chats');
   const [replyTo, setReplyTo] = useState<Message | null>(null);
   const [selectedMessages, setSelectedMessages] = useState<Set<string>>(new Set());
@@ -302,6 +304,13 @@ const ChattyPage = () => {
                 className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'}`}
               >
                 {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <button 
+                onClick={() => setShowTraining(true)}
+                className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'}`}
+                title="Train Jarvy AI"
+              >
+                <Bot className="w-4 h-4 text-purple-600" />
               </button>
               <button 
                 onClick={() => navigate('/status')}
@@ -781,6 +790,14 @@ const ChattyPage = () => {
             Chat with Jarvy AI
           </div>
         </button>
+      )}
+
+      {/* Jarvy Training Interface */}
+      {showTraining && (
+        <JarvyTraining 
+          darkMode={darkMode} 
+          onClose={() => setShowTraining(false)} 
+        />
       )}
     </div>
   );
