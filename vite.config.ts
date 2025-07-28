@@ -4,6 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/chattyy/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -15,6 +16,8 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    minify: 'esbuild'
+    minify: 'esbuild',
+    outDir: 'dist',
+    assetsDir: 'assets'
   }
 });
